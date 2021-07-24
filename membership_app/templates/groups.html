@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Groups</title>
+    {% load static %}
+    <link rel = "stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+    <div class="encabezado_2">
+        <h1>Hi, {{logged_user.first_name}} {{logged_user.last_name}}</h1>
+        <a href='/user/logout' class="logout">Log Out</a>
+    </div>
+
+    <div class="grupos">
+        <h2>Here are the organizations you may join:</h2>
+        <br><br>
+
+        {% for group in all_groups %}
+
+            <h2><a href="/user/edit_group/{{group.id}}">{{group.name}}</a></h2>
+            <p>Members: {{group.members}}</p>
+            <p>{{group.description}}</p>
+            <p>{{user_create}}</p>
+            {% endfor %}
+
+
+    </div>
+
+    <div class="agrega_grupos">
+        <h2>Create a new organization</h2>
+
+        <form action="/user/add_group" method="post">
+            {% csrf_token %}
+            <label>Org Name:</label>
+            <input type="text" name="name">
+            <label>Description</label>
+            <textarea name="description"></textarea>
+            <button>Create</button>
+        </form>
+        
+    </div>
+
+
+
+    <div class="errores">
+        {% if messages %}
+            <ul>
+                {% for message in messages %}
+                    <li>
+                        {{ message }}
+                    </li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+    </div>
+    
+    
+</body>
+</html>

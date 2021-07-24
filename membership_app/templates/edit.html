@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Group</title>
+
+    {% load static %}
+    <link rel = "stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+
+    <div class="encabezado_2">
+        <a href='/user/logout' class="enlaces">Dashboard</a>
+        <a href='/user/logout' class="enlaces">Log Out</a>
+    </div>
+
+    {% if is_creator %}
+        <form action="/user/delete_group/{{id}}" method="post">
+            {% csrf_token %}
+            <button> Delete- Group</button>
+        </form>
+    {% endif %}
+    <div >
+        <form action="/user/edit_group/{{id}}" method="post">
+            {% csrf_token %}
+            <h3 class="encabezado_3">{{name}}</h3>
+
+            <button class="encabezado_3">Join / Leave - Group</button>
+
+            <p>{{description}}</p>
+            <br>
+            <h3>Created by: {{user_create}}</h3>
+            <h3>Members</h3>
+            {% for member in members %}
+            <li>{{member}}</li>
+            {% endfor %}
+
+        </form>
+    </div>
+    
+
+    <div class="errores">
+        {% if messages %}
+            <ul>
+                {% for message in messages %}
+                    <li>
+                        {{ message }}
+                    </li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+    </div>
+
+</body>
+</html>
